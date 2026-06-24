@@ -1,0 +1,54 @@
+/* ============================================================
+   Design tokens — every visual value lives here.
+   Components reference var(--token) only; no raw hex in JSX.
+   ============================================================ */
+
+:root {
+  /* ---------- Palette ---------- */
+  --color-bg:               #0f1117;
+  --color-surface:          #171b26;
+  --color-surface-2:        #1e2333;
+  --color-border:           #2a3147;
+  --color-accent:           #4e9af1;
+  --color-accent-2:         #f4a442;
+
+  /* ---------- Graph nodes ---------- */
+  --color-node-bg:              #1e2333;
+  --color-node-border:          #2e3a5a;
+  --color-node-text:            #c8d3f0;
+  --color-node-zoomable-bg:     #1c2b4a;
+  --color-node-selected-bg:     #1b3464;
+  --color-node-selected-border: #4e9af1;
+  --color-shape-text:           #5a7096;
+  --color-edge:                 #3a4d70;
+
+  /* ---------- Grid / scan ---------- */
+  --color-cell-bg:      #1a2235;
+  --color-cell-border:  #2a3550;
+  --color-cell-visited: #1f3a5c;
+
+  /* ---------- Text ---------- */
+  --color-text-primary:   #c8d3f0;
+  --color-text-secondary: #7a8ab0;
+  --color-text-muted:     #4a5570;
+
+  /* ---------- Typography ---------- */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* ---------- Spacing ---------- */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* ---------- Radius ---------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* ---------- Transitions ---------- */
+  --transition-fast: 120ms ease;
+  --transition-med:  220ms ease;
+}

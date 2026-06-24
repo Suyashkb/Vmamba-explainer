@@ -1,0 +1,16 @@
+torch>=2.1.0
+torchvision>=0.16.0
+timm>=0.9.12
+einops>=0.7.0
+numpy>=1.24.0
+Pillow>=10.0.0
+jsonschema>=4.20.0
+matplotlib>=3.7.0      # for throwaway validation plots
+
+# VMamba — install from source (pin this commit):
+#   git clone https://github.com/MzeroMiko/VMamba
+#   cd VMamba && git checkout <commit-hash>
+#   pip install -e ".[cuda]"          # builds selective_scan CUDA ext
+#
+# If you only have CPU: the reference scan in ssm_reference.py is used
+# automatically; just skip the CUDA-kernel validation step.

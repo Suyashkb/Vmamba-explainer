@@ -1,0 +1,250 @@
+{
+  "vmamba_commit": "v2-default",
+  "cfg": {
+    "dims": [
+      96,
+      192,
+      384,
+      768
+    ],
+    "depths": [
+      2,
+      2,
+      9,
+      2
+    ],
+    "d_state": 16,
+    "expand": 2,
+    "img_size": 224,
+    "patch_size": 4
+  },
+  "levels": {
+    "L0": {
+      "nodes": [
+        {
+          "id": "patch_embed",
+          "label": "Patch Embed",
+          "shape": "(B,56,56,96)",
+          "eq": "x = W_p \\cdot \\mathrm{patches}",
+          "x": 50,
+          "y": 300,
+          "zoomTo": null
+        },
+        {
+          "id": "stage0",
+          "label": "Stage 0\n(2\u00d7VSS)",
+          "shape": "(B,56,56,96)",
+          "eq": "",
+          "x": 200,
+          "y": 300,
+          "zoomTo": "stage0_block0"
+        },
+        {
+          "id": "downsample0",
+          "label": "Downsample 0",
+          "shape": "(B,28,28,192)",
+          "eq": "",
+          "x": 360,
+          "y": 300,
+          "zoomTo": null
+        },
+        {
+          "id": "stage1",
+          "label": "Stage 1\n(2\u00d7VSS)",
+          "shape": "(B,28,28,192)",
+          "eq": "",
+          "x": 480,
+          "y": 300,
+          "zoomTo": "stage1_block0"
+        },
+        {
+          "id": "downsample1",
+          "label": "Downsample 1",
+          "shape": "(B,14,14,384)",
+          "eq": "",
+          "x": 640,
+          "y": 300,
+          "zoomTo": null
+        },
+        {
+          "id": "stage2",
+          "label": "Stage 2\n(9\u00d7VSS)",
+          "shape": "(B,14,14,384)",
+          "eq": "",
+          "x": 760,
+          "y": 300,
+          "zoomTo": "stage2_block0"
+        },
+        {
+          "id": "downsample2",
+          "label": "Downsample 2",
+          "shape": "(B,7,7,768)",
+          "eq": "",
+          "x": 920,
+          "y": 300,
+          "zoomTo": null
+        },
+        {
+          "id": "stage3",
+          "label": "Stage 3\n(2\u00d7VSS)",
+          "shape": "(B,7,7,768)",
+          "eq": "",
+          "x": 1040,
+          "y": 300,
+          "zoomTo": "stage3_block0"
+        },
+        {
+          "id": "norm",
+          "label": "LayerNorm",
+          "shape": "",
+          "eq": "\\hat{x} = \\mathrm{LN}(x)",
+          "x": 1200,
+          "y": 300,
+          "zoomTo": null
+        },
+        {
+          "id": "head",
+          "label": "Head (1000)",
+          "shape": "",
+          "eq": "\\hat{y} = W_h x",
+          "x": 1320,
+          "y": 300,
+          "zoomTo": null
+        }
+      ],
+      "edges": [
+        [
+          "patch_embed",
+          "stage0"
+        ],
+        [
+          "stage0",
+          "downsample0"
+        ],
+        [
+          "downsample0",
+          "stage1"
+        ],
+        [
+          "stage1",
+          "downsample1"
+        ],
+        [
+          "downsample1",
+          "stage2"
+        ],
+        [
+          "stage2",
+          "downsample2"
+        ],
+        [
+          "downsample2",
+          "stage3"
+        ],
+        [
+          "stage3",
+          "norm"
+        ],
+        [
+          "norm",
+          "head"
+        ]
+      ]
+    },
+    "L1": {
+      "nodes": [
+        {
+          "id": "ln",
+          "label": "LayerNorm",
+          "shape": "(B,L,96)",
+          "eq": "\\hat{x}=\\mathrm{LN}(x)",
+          "x": 100,
+          "y": 250
+        },
+        {
+          "id": "in_proj",
+          "label": "in_proj (\u00d72)",
+          "shape": "(B,L,192)",
+          "eq": "z,g = W_{\\mathrm{in}} \\hat{x}",
+          "x": 250,
+          "y": 250
+        },
+        {
+          "id": "dw_conv",
+          "label": "DW Conv",
+          "shape": "(B,L,192)",
+          "eq": "z = \\mathrm{DWConv}(z)",
+          "x": 400,
+          "y": 180
+        },
+        {
+          "id": "ss2d",
+          "label": "SS2D",
+          "shape": "(B,L,192)",
+          "eq": "y = \\mathrm{SS2D}(z)",
+          "x": 560,
+          "y": 180,
+          "zoomTo": "ss2d"
+        },
+        {
+          "id": "gate",
+          "label": "Gate \u2299 SiLU",
+          "shape": "(B,L,192)",
+          "eq": "y' = y \\odot \\mathrm{SiLU}(g)",
+          "x": 560,
+          "y": 330
+        },
+        {
+          "id": "out_proj",
+          "label": "out_proj",
+          "shape": "(B,L,96)",
+          "eq": "y'' = W_{\\mathrm{out}} y'",
+          "x": 720,
+          "y": 250
+        },
+        {
+          "id": "residual",
+          "label": "\u2295 Residual",
+          "shape": "(B,L,96)",
+          "eq": "x' = x + y''",
+          "x": 870,
+          "y": 250
+        }
+      ],
+      "edges": [
+        [
+          "ln",
+          "in_proj"
+        ],
+        [
+          "in_proj",
+          "dw_conv"
+        ],
+        [
+          "dw_conv",
+          "ss2d"
+        ],
+        [
+          "ss2d",
+          "gate"
+        ],
+        [
+          "in_proj",
+          "gate"
+        ],
+        [
+          "gate",
+          "out_proj"
+        ],
+        [
+          "out_proj",
+          "residual"
+        ],
+        [
+          "ln",
+          "residual"
+        ]
+      ]
+    }
+  }
+}

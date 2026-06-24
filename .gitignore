@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+.eggs/
+
+# Node
+node_modules/
+interactive/dist/
+interactive/.vercel/
+
+# Manim output
+manim/media/
+manim/output/
+manim/filelist.txt
+
+# Misc
+.DS_Store
+*.swp
+*.swo
+.env
+.env.local
+
+# Claude settings
+.claude/
